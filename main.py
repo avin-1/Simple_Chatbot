@@ -7,6 +7,7 @@ prompt = st.text_area("enter Prompt")
 bt = st.button("enter")
 
 if bt :
-    response = lch.chat(prompt)
+    with st.spinner("Generating response..."):
+        response = lch.chat(prompt)
     st.subheader("Answer: ")
     st.markdown(response)
