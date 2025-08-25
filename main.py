@@ -1,23 +1,25 @@
-import langchain_helper as lch
 import streamlit as st
+import langchain_helper as lch
 
 st.title("Simple Chat Application")
 
-# Initialize chat history
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# Input box
-prompt = st.text_area("Enter Prompt")
+temperature = st.slider("Creativity (temperature)", 0.0, 1.0, 0.7)
 
-# Button
-if st.button("Enter"):
-    with st.spinner("Generating response..."):
-        response = lch.chat(prompt)
-    # Save to history
-    st.session_state.history.append({"user": prompt, "bot": response})
+prompt = st.chat_input("Enter your message...")
 
-# Display chat history
-for chat in st.session_state.history:
-    st.markdown(f"**You:** {chat['user']}")
-    st.markdown(f"**Bot:** {chat['bot']}")
+if prompt:
+    try:
+        with st.spinner("Generating response..."):
+            response = lch.chat(prompt, temperature=temperature)
+    except Exception as e:
+        response = f"Error: {str(e)}"
+
+    st.session_state.history.append({"role": "user", "content": prompt})
+    st.session_state.history.append({"role": "bot", "content": response})
+
+for msg in st.session_state.history:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
