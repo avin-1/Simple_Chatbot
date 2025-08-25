@@ -1,8 +1,7 @@
 import langchain_helper as lch
 import streamlit as st
 
-st.title("Simple Chat Application")
-
+title =st.title("Simple Chat Application")
 prompt = st.text_area("enter Prompt")
 bt = st.button("enter")
 
