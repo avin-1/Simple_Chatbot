@@ -2,6 +2,7 @@ import streamlit as st
 import langchain_helper as lch
 st.title("Simple Chat Application")
 
+
 if "history" not in st.session_state:
     st.session_state.history = []
 
